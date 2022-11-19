@@ -10,6 +10,6 @@ import UIKit
 class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("HomeVC")
+        print("HomeVC Created")
     }
 }
