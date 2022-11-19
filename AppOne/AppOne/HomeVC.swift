@@ -7,9 +7,10 @@
 
 import UIKit
 
-class HomeVC: UIViewController {
+final class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .green
         print("HomeVC Created")
     }
 }
