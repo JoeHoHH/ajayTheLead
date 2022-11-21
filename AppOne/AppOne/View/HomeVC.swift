@@ -13,27 +13,40 @@ class HomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCollectionView()
+      //  configureCollectionView()
         configureDataSource()
+        applySnapshot()
     }
 
     func configureCollectionView() {
-        brandsCollectionView = UICollectionView(frame: view.bounds, collectionViewLayout: configureLayout())
-        brandsCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        view.addSubview(brandsCollectionView)
+//        brandsCollectionView = UICollectionView(frame: view.bounds, collectionViewLayout: configureLayout())
+//        brandsCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+//        view.addSubview(brandsCollectionView)
     }
 
-    func configureLayout() -> UICollectionViewLayout {
-        UICollectionViewCompositionalLayout.list(using: UICollectionLayoutListConfiguration(appearance: .grouped))
-    }
+//    func configureLayout() -> UICollectionViewLayout {
+//        UICollectionViewCompositionalLayout.list(using: UICollectionLayoutListConfiguration(appearance: .plain))
+//    }
 
     func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource(collectionView: brandsCollectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-            let textLbl = UILabel()
-            textLbl.text = itemIdentifier.name
-            cell.contentView.addSubview(textLbl)
-            return cell
-        })
+        let cellRegistration = UICollectionView.CellRegistration<SectionTitles, Brands> { cell, indexPath, item in
+            var contentConfiguration = cell.defaultContentConfiguration()
+            contentConfiguration.text = "\(item)"
+            contentConfiguration.textProperties.color = .lightGray
+            cell.contentConfiguration = contentConfiguration
+        }
+
+        dataSource = UICollectionViewDiffableDataSource<SectionTitles, Brands>(collectionView: brandsCollectionView) {
+            (collectionView: UICollectionView, indexPath: IndexPath, itemIdentifier: Int) -> UICollectionViewCell? in
+
+            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
+                                                                for: indexPath,
+                                                                item: itemIdentifier)
+        }
+    }
+
+    func applySnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<SectionTitles, Brands>()
+        dataSource.apply(snapshot)
     }
 }
