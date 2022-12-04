@@ -7,46 +7,47 @@
 
 import UIKit
 
-class HomeVC: UIViewController {
-    private var brandsCollectionView: UICollectionView!
-    private var dataSource: UICollectionViewDiffableDataSource<SectionTitles, Brands>!
+final class HomeVC: UIViewController {
+    private lazy var brandsCollection: UICollectionView = {
+        let collectionV = UICollectionView(
+            frame: view.bounds,
+            collectionViewLayout: UICollectionViewCompositionalLayout.list(using: UICollectionLayoutListConfiguration(appearance: .plain)))
+        return collectionV
+    }()
+
+    private lazy var dataSource: UICollectionViewDiffableDataSource<SectionTitles, Brands> = {
+        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Brands> { cell, index, res  in
+            var contentConfig = cell.defaultContentConfiguration()
+            contentConfig.text = res.name
+            cell.contentConfiguration = contentConfig
+        }
+
+        return UICollectionViewDiffableDataSource(collectionView: brandsCollection) { collectionView, indexPath, itemIdentifier in
+            collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
+        }
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      //  configureCollectionView()
-        configureDataSource()
-        applySnapshot()
+        view.addSubview(brandsCollection)
+        brandsCollection.translatesAutoresizingMaskIntoConstraints = false
+        applyConstrains()
+        applySnapshot(sec: SectionTitles(title: "Test"), bran: Brands(name: "Mr.Q", headQuarters: "CA", ceo: "Mr.Space"))
     }
 
-    func configureCollectionView() {
-//        brandsCollectionView = UICollectionView(frame: view.bounds, collectionViewLayout: configureLayout())
-//        brandsCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-//        view.addSubview(brandsCollectionView)
+    private func applyConstrains() {
+        NSLayoutConstraint.activate([
+            brandsCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            brandsCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            brandsCollection.topAnchor.constraint(equalTo: view.topAnchor),
+            brandsCollection.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 
-//    func configureLayout() -> UICollectionViewLayout {
-//        UICollectionViewCompositionalLayout.list(using: UICollectionLayoutListConfiguration(appearance: .plain))
-//    }
-
-    func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<SectionTitles, Brands> { cell, indexPath, item in
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = "\(item)"
-            contentConfiguration.textProperties.color = .lightGray
-            cell.contentConfiguration = contentConfiguration
-        }
-
-        dataSource = UICollectionViewDiffableDataSource<SectionTitles, Brands>(collectionView: brandsCollectionView) {
-            (collectionView: UICollectionView, indexPath: IndexPath, itemIdentifier: Int) -> UICollectionViewCell? in
-
-            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
-                                                                for: indexPath,
-                                                                item: itemIdentifier)
-        }
-    }
-
-    func applySnapshot() {
+    private func applySnapshot(sec: SectionTitles, bran: Brands) {
         var snapshot = NSDiffableDataSourceSnapshot<SectionTitles, Brands>()
+        snapshot.appendSections([sec])
+        snapshot.appendItems([bran])
         dataSource.apply(snapshot)
     }
 }
