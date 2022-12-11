@@ -16,6 +16,8 @@ final class HomeVC: UIViewController {
         return collectionV
     }()
 
+    private lazy var homeVC = HomeViewModel()
+
     private lazy var dataSource: UICollectionViewDiffableDataSource<SectionTitle, Brand> = {
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Brand> { cell, index, res  in
             var contentConfig = cell.defaultContentConfiguration()
@@ -34,7 +36,7 @@ final class HomeVC: UIViewController {
         super.viewDidLoad()
         view.addSubview(brandsCollection)
         applyConstrains()
-        applySnapshot(sec: SectionTitle(title: "Test"), bran: Brand(name: "Mr.Q", headQuarters: "CA", ceo: "Mr.Space"))
+        applySnapshot(sec: homeVC.fetchDataForSections(), bran: homeVC.fetchDataForItems())
     }
 
     private func applyConstrains() {
@@ -46,10 +48,10 @@ final class HomeVC: UIViewController {
         ])
     }
 
-    private func applySnapshot(sec: SectionTitle, bran: Brand) {
+    private func applySnapshot(sec: [SectionTitle], bran: [Brand]) {
         var snapshot = NSDiffableDataSourceSnapshot<SectionTitle, Brand>()
-        snapshot.appendSections([sec])
-        snapshot.appendItems([bran])
+        snapshot.appendSections(sec)
+        snapshot.appendItems(bran)
         dataSource.apply(snapshot)
     }
 }
