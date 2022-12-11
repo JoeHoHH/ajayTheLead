@@ -12,13 +12,16 @@ final class HomeVC: UIViewController {
         let collectionV = UICollectionView(
             frame: view.bounds,
             collectionViewLayout: UICollectionViewCompositionalLayout.list(using: UICollectionLayoutListConfiguration(appearance: .plain)))
+        collectionV.translatesAutoresizingMaskIntoConstraints = false
         return collectionV
     }()
 
-    private lazy var dataSource: UICollectionViewDiffableDataSource<SectionTitles, Brands> = {
-        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Brands> { cell, index, res  in
+    private lazy var dataSource: UICollectionViewDiffableDataSource<SectionTitle, Brand> = {
+        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Brand> { cell, index, res  in
             var contentConfig = cell.defaultContentConfiguration()
             contentConfig.text = res.name
+            contentConfig.secondaryText = res.headQuarters
+//            contentConfig.image = UIImage(named: "Flower.png")
             cell.contentConfiguration = contentConfig
         }
 
@@ -30,9 +33,8 @@ final class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(brandsCollection)
-        brandsCollection.translatesAutoresizingMaskIntoConstraints = false
         applyConstrains()
-        applySnapshot(sec: SectionTitles(title: "Test"), bran: Brands(name: "Mr.Q", headQuarters: "CA", ceo: "Mr.Space"))
+        applySnapshot(sec: SectionTitle(title: "Test"), bran: Brand(name: "Mr.Q", headQuarters: "CA", ceo: "Mr.Space"))
     }
 
     private func applyConstrains() {
@@ -44,8 +46,8 @@ final class HomeVC: UIViewController {
         ])
     }
 
-    private func applySnapshot(sec: SectionTitles, bran: Brands) {
-        var snapshot = NSDiffableDataSourceSnapshot<SectionTitles, Brands>()
+    private func applySnapshot(sec: SectionTitle, bran: Brand) {
+        var snapshot = NSDiffableDataSourceSnapshot<SectionTitle, Brand>()
         snapshot.appendSections([sec])
         snapshot.appendItems([bran])
         dataSource.apply(snapshot)

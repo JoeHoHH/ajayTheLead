@@ -5,10 +5,6 @@
 //  Created by Asapu, Ajaikumar on 21.11.22.
 //
 
-struct SectionTitles : Hashable {
+struct SectionTitle : Hashable {
     let title: String
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(title)
-    }
 }
