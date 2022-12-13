@@ -37,7 +37,7 @@ final class HomeVC: UIViewController {
         super.viewDidLoad()
         view.addSubview(brandsCollection)
         applyConstrains()
-        applySnapshot(sec: homeVC.fetchDataForSections(), bran: homeVC.fetchDataForItems())
+        applySnapshot(sec: homeVM.fetchDataForSections(), bran: homeVM.fetchDataForItems())
 //        navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .refresh, primaryAction: UIAction { _ in
 //        })
     }
