@@ -9,5 +9,4 @@ struct Brand : Hashable {
     let name: String
     let headQuarters: String
     let ceo: String
-
 }
