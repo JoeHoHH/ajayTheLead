@@ -40,6 +40,12 @@ final class HomeVC: UIViewController {
         applySnapshot(sec: homeVM.fetchDataForSections(), bran: homeVM.fetchDataForItems())
     }
 
+    private func fetchDataFromService() async {
+//        Task {
+//            try await ServiceLayer().fetchUsers()
+//        }
+    }
+
     private func applyConstrains() {
         NSLayoutConstraint.activate(
             [
