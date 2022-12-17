@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		39A7C687294A643A009821DF /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A7C686294A643A009821DF /* Users.swift */; };
+		39A7C689294BBAAC009821DF /* ToDos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A7C688294BBAAC009821DF /* ToDos.swift */; };
+		39A7C68B294BBB3D009821DF /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A7C68A294BBB3D009821DF /* Photos.swift */; };
 		39AA29A329298AD7008A1D39 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AA29A229298AD7008A1D39 /* HomeVC.swift */; };
 		39AA29A8292AD827008A1D39 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AA29A7292AD827008A1D39 /* Brand.swift */; };
 		39AA29AE292C1E21008A1D39 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AA29AD292C1E21008A1D39 /* HomeViewModel.swift */; };
@@ -39,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		39A7C686294A643A009821DF /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		39A7C688294BBAAC009821DF /* ToDos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDos.swift; sourceTree = "<group>"; };
+		39A7C68A294BBB3D009821DF /* Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
 		39AA29A229298AD7008A1D39 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		39AA29A7292AD827008A1D39 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		39AA29AD292C1E21008A1D39 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeViewModel.swift; path = AppOne/ViewModel/HomeViewModel.swift; sourceTree = SOURCE_ROOT; };
@@ -103,6 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				39FAC6132948ECD20009D803 /* ServiceLayer.swift */,
+				39A7C686294A643A009821DF /* Users.swift */,
+				39A7C688294BBAAC009821DF /* ToDos.swift */,
+				39A7C68A294BBB3D009821DF /* Photos.swift */,
 			);
 			path = DataServiceLayer;
 			sourceTree = "<group>";
@@ -298,12 +307,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39A7C687294A643A009821DF /* Users.swift in Sources */,
 				39AA29B0292C207D008A1D39 /* SectionTitle.swift in Sources */,
+				39A7C689294BBAAC009821DF /* ToDos.swift in Sources */,
 				39AA29A329298AD7008A1D39 /* HomeVC.swift in Sources */,
 				39AA29A8292AD827008A1D39 /* Brand.swift in Sources */,
 				4DE418FF292948AA00A503F2 /* AppDelegate.swift in Sources */,
 				39AA29AE292C1E21008A1D39 /* HomeViewModel.swift in Sources */,
 				4DE41901292948AA00A503F2 /* SceneDelegate.swift in Sources */,
+				39A7C68B294BBB3D009821DF /* Photos.swift in Sources */,
 				39FAC6142948ECD20009D803 /* ServiceLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

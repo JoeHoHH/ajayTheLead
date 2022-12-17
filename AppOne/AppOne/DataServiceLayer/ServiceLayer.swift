@@ -7,64 +7,62 @@
 
 import Foundation
 
-struct Users: Codable {
-    let id: Int
-    let name: String
-    let username: String
-    let email: String
-    let address: Address
-    let phone: String
-    let website: String
-    let company: Company
+protocol ServiceCalls {
+    func fetchToDOs(completion: @escaping (Result<[ToDos], ErrorType>) -> Void)
+    func fetchUsers() async throws -> [Users]
+    func fetchPhotos() async throws -> [Photos]
+}
 
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case username
-        case email
-        case address = "address"
-        case phone
-        case website
-        case company
+class ServiceLayer: ServiceCalls {
+
+    func fetchToDOs(completion: @escaping (Result<[ToDos], ErrorType>) -> Void) {
+        if let todosUrl = URL(string: "https://jsonplaceholder.typicode.com/todos") { URLSession.shared.dataTask(with: todosUrl) { (data, response, error) in
+            if error != nil {
+                completion(.failure(.serviceError))
+                return
+            }
+
+            if let data = data {
+                let todosData = try JSONDecoder().decode([ToDos].self, from: data)
+                completion(.success(todosData))
+                return
+            }
+        }.resume()
+        }
     }
-}
 
-struct Address: Codable {
-    let street: String
-    let suite: String
-    let city: String
-    let zipcode: String
-    let geo: Geo
-}
+    func fetchPhotos() async throws -> [Photos] {
+            guard let url = URL(string: "https://jsonplaceholder.typicode.com/photos") else {
+                throw ErrorType.wrongURL
+            }
 
-struct Geo: Codable {
-    let lat: String
-    let lng: String
-}
-
-struct Company: Codable {
-    let name: String
-    let catchPhrase: String
-    let biggestBS: String
-
-    enum CodingKeys: String, CodingKey {
-        case name
-        case catchPhrase
-        case biggestBS = "bs"
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                let photos = try JSONDecoder().decode(Photos.self, from: data)
+                return [photos]
+            } catch {
+                throw ErrorType.responseError
+            }
     }
-}
 
-
-class ServiceLayer {
-    func fetchUsers() async {
-        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
+    func fetchUsers() async throws -> [Users] {
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else {
+            throw ErrorType.wrongURL
+        }
 
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let response = try JSONDecoder().decode(Users.self, from: data)
-            print(response)
+            return [response]
         } catch {
-            print("Catch called")
+            throw ErrorType.responseError
         }
     }
+}
+
+enum ErrorType: Error {
+    case networkError
+    case serviceError
+    case wrongURL
+    case responseError
 }

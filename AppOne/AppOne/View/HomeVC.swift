@@ -38,12 +38,12 @@ final class HomeVC: UIViewController {
         view.addSubview(brandsCollection)
         applyConstrains()
         applySnapshot(sec: homeVM.fetchDataForSections(), bran: homeVM.fetchDataForItems())
-//        navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .refresh, primaryAction: UIAction { _ in
-//        })
     }
 
     private func fetchDataFromService() async {
-        await ServiceLayer().fetchUsers()
+//        Task {
+//            try await ServiceLayer().fetchUsers()
+//        }
     }
 
     private func applyConstrains() {
